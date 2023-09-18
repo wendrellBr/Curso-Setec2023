@@ -45,9 +45,6 @@ h1 {
 }
 
 
-
-
-
 /* + header */
 #cabecalho {
   background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url("../img/bg-principal.jpg");
@@ -86,7 +83,6 @@ h1 {
 .logotipo img {
   width: 600px;
 }
-
 
 
 /* + navbar */
@@ -158,8 +154,6 @@ h1 {
 .nav-links a:hover {
   color: var(--principal);
 }
-
-
 
 
 
@@ -269,54 +263,6 @@ h1 {
 }
 
 
-/* + informacoes container */
-#informacoes {
-  width: 80%;
-  margin: 0 auto;
-}
-
-.info {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 5%;
-  margin-bottom: 64px;
-  border-bottom: var(--fonte-color) solid 1px;
-  padding: 60px;
-}
-
-
-.info img {
-  width: 350px;
-  height: 500px;
-  border-radius: 15px;
-}
-
-.info h3 {
-  margin-bottom: 16px;
-  font-size: 32px;
-  font-weight: 400;
-  color: var(--fonte-color);
-  line-height: 45px;
-  text-align: justify
-}
-
-.info span {
-  color: var(--principal);
-  font-weight: bold;
-}
-
-.info-desc {
-  width: 100%;
-  padding-left: 32px;
-}
-
-#info-3 .info-desc {
-  justify-self: flex-start;
-}
-
-
-
 /* + formulario */
 .contato {
   background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url("../img/bg-footer.jpg");
@@ -411,36 +357,6 @@ h1 {
   text-align: center;
 }
 
-
-
-/* + Footer */
-#footer {
-  text-align: center;
-  height: 160px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  background-color: var(--bg-color);
-  background-position: center;
-  background-size: cover;
-  color: var(--fonte-color);
-}
-
-#footer h3 {
-  padding-top: 30px;
-  font-size: 29px;
-  margin-bottom: 8px;
-  ;
-}
-
-#footer p:nth-child(2) {
-  margin-bottom: 32px;
-  font-size: 1.32px;
-}
-
-#footer span {
-  font-weight: bold;
-}
 
 
 
@@ -544,37 +460,6 @@ h1 {
     font-size: 24px;
   }
 
-
-
-  /* + Container informativo */
-  .info {
-    flex-direction: column;
-    padding: 10px;
-  }
-
-  #info-2 {
-    flex-direction: column-reverse;
-  }
-
-  .info img {
-    max-height: 500px;
-    margin-bottom: 20px;
-    padding-left: 10px;
-    border-radius: 0;
-  }
-
-  .info-desc {
-    padding-left: 0;
-  }
-
-  .info h3 {
-    font-size: 20px;
-    line-height: 40px;
-  }
-
-
-
-
   /* + formulario */
   .contato {
     flex-direction: column;
@@ -600,8 +485,6 @@ h1 {
     padding: 8px;
     margin-top: 5px;
   }
-
-
 
 }
 

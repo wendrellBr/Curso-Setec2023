@@ -127,10 +127,7 @@ cpfInput.addEventListener("input", function () {
 });
 
 
-
-
-
-    // nav bar
+ // nav bar
 const navbarr = document.getElementById('navbar');
 let scrolled = false;
 window.onscroll = () => {
@@ -144,8 +141,6 @@ window.onscroll = () => {
     scrolled = false;
   }
 }
-
-
 
 const themeToggle = document.getElementById('theme-toggle');
 themeToggle.addEventListener('click', () => {
@@ -186,7 +181,6 @@ function otherImgTheme() {
   }
 
 }
-
 
 setDefaultTheme();
 

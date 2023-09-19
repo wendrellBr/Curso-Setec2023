@@ -70,8 +70,8 @@ function TestaCPF(strCPF) {
   //tirando os pontos e o traço e atribuindo a uma variavel
   let strCPFClear = deMaskCPF(strCPF);
 
-for (let i = 0; i < 9; i++) { //for para pegara posição do numero
-        //atribuindo soma a soma
+  for (let i = 0; i < 9; i++) { //for para pegara posição do numero
+    //atribuindo soma a soma
     Soma += parseInt((strCPFClear.charAt(i))) * (10 - i); // .charAt pega o caracter do indice especificado e começar pelo indice 0
     Resto = (Soma * 10) % 11;
 
@@ -87,7 +87,7 @@ for (let i = 0; i < 9; i++) { //for para pegara posição do numero
 
     // Verificando o segundo dígito
 
-  for (let i = 0; i < 10; i++) {  //for para pegara posição do numero
+    for (let i = 0; i < 10; i++) {  //for para pegara posição do numero
       Soma += parseInt(strCPFClear.charAt(i)) * (11 - i); // Corrigido o comentário para "de 10 até 2"
     }
 
@@ -162,20 +162,20 @@ for (let i = 0; i < 9; i++) { //for para pegara posição do numero
     emailInput.value = "";
     cpfInput.value = "";
   });
+}
 
+//colocando . e - conforme as especificações
+function maskCPF() {
+  let strCPF = cpfInput.value;
+  if (strCPF.length == 3 || strCPF.length == 7) cpfInput.value += ".";
+  if (strCPF.length == 11) cpfInput.value += "-";
+}
+//retirando tudo que n seja apenas digitos
+function deMaskCPF(cpf) {
+  return cpf.replace(/\D/g, '');
+}
 
-  //colocando . e - conforme as especificações
-  function maskCPF() {
-    let strCPF = cpfInput.value;
-    if (strCPF.length == 3 || strCPF.length == 7) cpfInput.value += ".";
-    if (strCPF.length == 11) cpfInput.value += "-";
-  }
-  //retirando tudo que n seja apenas digitos
-  function deMaskCPF(cpf) {
-    return cpf.replace(/\D/g, '');
-  }
-
-  // Toda vez que começar a ser inserido conteudo no cpf
-  cpfInput.addEventListener("input", function () {
-    maskCPF();
-  });
+// Toda vez que começar a ser inserido conteudo no cpf
+cpfInput.addEventListener("input", function () {
+  maskCPF();
+});

@@ -1,13 +1,77 @@
-function TestaCPF(strCPF) {
-  var Soma = 0;
-  var Resto;
-  var verificacao = false; // Corrigido o nome da variável para "verificacao"
-  //tirando os pontos e o traço e atribuindo a uma variavel
-  var strCPFClear = deMaskCPF(strCPF);
-  console.log(strCPFClear);
 
-  for (i = 1; i <= 9; i++) {
-    Soma = Soma + parseInt(strCPFClear.substring(i - 1, i)) * (11 - i);
+// navbarr
+const navbarr = document.getElementById('navbar');
+let scrolled = false;
+window.onscroll = () => {
+  if (window.scrollY > 100) { // scrollY Se refere a altura da página 
+    if (!scrolled) { // não falso
+      navbarr.classList.add('scrolled'); // adicionamos pela propriedade classlist a classe 'scrolled'
+      scrolled = true;
+    }
+  } else if (scrolled) { // Se nao for mais que 100 e se scrolled for verdadeiro
+    navbarr.classList.remove('scrolled'); // removemos a classe presente
+    scrolled = false; // e reatribuimos scrolled como falso
+  }
+}
+
+const themeToggle = document.getElementById('theme-toggle'); //pegando o botao pelo id
+themeToggle.addEventListener('click', () => { //adicionando um evento de click ao mesmo pelo metodo addEventListener
+
+  // Alterar o tema
+  const currentTheme = document.documentElement.getAttribute('data-theme'); //atribuindo no corpo do html o atribudo data-theme
+  const newTheme = currentTheme === 'escuro' ? 'claro' : 'escuro'; //fazendo por meio do if ternario a troca de temas
+  // condição ?(é verdadeira?) se sim: claro :(senao) escuro
+  document.documentElement.setAttribute('data-theme', newTheme); //reatribuindo por meio do set a mudanca de elemento no documento
+
+
+  // Trocar a imagem do tema chamando a funcao responsavel por isso
+  otherImgTheme();
+
+});
+
+//funcao que deixa padrao o tema claro primeiro
+function setDefaultTheme() {
+  const currentTheme = document.documentElement.getAttribute('data-theme');
+  if (!currentTheme) { // verificando a existencia do data-theme
+    document.documentElement.setAttribute('data-theme', 'claro'); // 'claro' é o tema padrão, você pode alterar para 'escuro' se preferir
+    const imgThemeElement = document.getElementById("img-theme");
+    const dayTheme = document.getElementById("img-theme-day");
+    imgThemeElement.src = dayTheme.src; // pegando diretamente o arquivo e mudando
+  }
+}
+//chamando a funcao para ser executada 
+setDefaultTheme();
+
+function otherImgTheme() {
+  const imgThemeElement = document.getElementById("img-theme"); // pegando pelo id o elemento foto
+  const currentTheme = document.documentElement.getAttribute('data-theme'); // atribuindo o elemento data
+  const nightTheme = document.getElementById("img-theme-night"); //buscando a foto da lua
+  const dayTheme = document.getElementById("img-theme-day");//buscando a foto do sol
+
+  if (currentTheme === "escuro") { // se for igual a escuro(tema da lya)
+    imgThemeElement.src = nightTheme.src; // trocaremos a imagem que estiver atual pela imagem da lua
+  }
+  if (currentTheme === "claro") {
+    imgThemeElement.src = dayTheme.src;
+  }
+
+}
+
+
+
+
+
+
+
+function TestaCPF(strCPF) {
+  let Soma = 0;
+  let Resto;
+
+  //tirando os pontos e o traço e atribuindo a uma variavel
+  let strCPFClear = deMaskCPF(strCPF);
+
+  for (let i = 0; i < 9; i++) {
+    Soma += parseInt((strCPFClear.charAt(i))) * (10 - i);
   }
   Resto = (Soma * 10) % 11;
 
@@ -15,14 +79,16 @@ function TestaCPF(strCPF) {
     Resto = 0;
   }
 
-  if (Resto !== parseInt(strCPFClear.substring(9, 10))) {
-    verificacao = false;
+  if (Resto !== parseInt(strCPFClear.charAt(9))) {
+    return false; // Se a verificação falhar, retorne false imediatamente
   }
 
   Soma = 0;
 
-  for (i = 1; i <= 10; i++) {
-    Soma = Soma + parseInt(strCPFClear.substring(i - 1, i)) * (12 - i); // Corrigido o comentário para "de 10 até 2"
+  // Verificando o segundo dígito
+
+  for (let i = 0; i < 10; i++) {
+    Soma += parseInt(strCPFClear.charAt(i)) * (11 - i); // Corrigido o comentário para "de 10 até 2"
   }
 
   Resto = (Soma * 10) % 11;
@@ -31,73 +97,63 @@ function TestaCPF(strCPF) {
     Resto = 0;
   }
 
-  if (Resto !== parseInt(strCPFClear.substring(10, 11))) {
-    verificacao = false;
+  if (Resto !== parseInt(strCPFClear.charAt(10))) {
+    return false; // Se a verificação falhar, retorne false imediatamente
   }
 
-  // Movido o retorno verdadeiro para dentro do último bloco de verificação
-  if (Resto === parseInt(strCPFClear.substring(10, 11))) {
-    verificacao = true;
-  }
-
-  return verificacao;
+  return true;
 }
-
-
 //inicio do formulario
 const nameInput = document.querySelector("#name");
 const emailInput = document.querySelector("#email");
 const cpfInput = document.querySelector("#cpf");
 const submitButton = document.querySelector("#send");
-const errorMessage = document.querySelector(".msg");
-const resposta = document.querySelector(".respostaUsuario");
+const message = document.querySelector(".msg");
 
 //BOTAO PARA
 submitButton.addEventListener("click", (e) => {
   e.preventDefault();
 
+  //pegando os valores passados para os elementos
   let nameValue = nameInput.value;
   let emailValue = emailInput.value;
   let cpfValue = cpfInput.value;
 
 
-  var resultado = TestaCPF(cpfValue);
-  console.log(resultado);
-
+  var resultado = TestaCPF(cpfValue); // passando a funcao testacpf como valor, sendo que ela recebera o cpf da pessoa
   if (resultado === true) {
-    errorMessage.textContent = "Cadastrado com Sucesso!"
-    errorMessage.classList = "acerto";
+    message.textContent = "Cadastrado com Sucesso!"
+    message.classList = "acerto";
 
     //tempo na tela
     setTimeout(() => {
-      errorMessage.textContent = "";
-      errorMessage.classList = "";
-    }, 100000);
+      message.textContent = "";
+      message.classList = "";
+    }, 10000);
 
   } else {
-    errorMessage.textContent = "CPF Inválido! Por favor, insira um cpf válido!.";
-    errorMessage.classList = "error"; //busca na classe error
+    message.textContent = "CPF Inválido! Por favor, insira um cpf válido!.";
+    message.classList = "error"; //busca na classe error
 
     //tempo para a faixa error ficar em tela
     setTimeout(() => {
-      errorMessage.textContent = "";
-      errorMessage.classList = "";
+      message.textContent = "";
+      message.classList = "";
       //deixando vazio o cpf
       cpfInput.value = "";
-    }, 120000);
-    return
+    }, 12000);
   }
 
   ///tratamento de erro
   if (nameValue === "" || emailValue === "" || cpfValue === "") {
-    errorMessage.textContent = "Por favor, preencha todos os campos!";
-    errorMessage.classList = "error"; //busca na classe error
+    message.textContent = "Por favor, preencha todos os campos!";
+    message.classList = "error"; //busca na classe error
 
     //tempo para a faixa error ficar em tela
     setTimeout(() => {
-      errorMessage.textContent = "";
-      errorMessage.classList = "";
-    }, 10000);
+      message.textContent = "";
+      message.classList = "";
+    }, 5000);
     return; //sai da função
   }
 
@@ -105,10 +161,8 @@ submitButton.addEventListener("click", (e) => {
   nameInput.value = "";
   emailInput.value = "";
   cpfInput.value = "";
-
-
-  // if(TestaCPF(cpfValue)) 
 });
+
 
 //colocando . e - conforme as especificações
 function maskCPF() {
@@ -121,66 +175,7 @@ function deMaskCPF(cpf) {
   return cpf.replace(/\D/g, '');
 }
 
-
+// Toda vez que começar a ser inserido conteudo no cpf
 cpfInput.addEventListener("input", function () {
   maskCPF();
 });
-
-
- // nav bar
-const navbarr = document.getElementById('navbar');
-let scrolled = false;
-window.onscroll = () => {
-  if (window.scrollY > 100) {
-    if (!scrolled) {
-      navbarr.classList.add('scrolled');
-      scrolled = true;
-    }
-  } else if (scrolled) {
-    navbarr.classList.remove('scrolled');
-    scrolled = false;
-  }
-}
-
-const themeToggle = document.getElementById('theme-toggle');
-themeToggle.addEventListener('click', () => {
-  // Alterar o tema
-  const currentTheme = document.documentElement.getAttribute('data-theme');
-  const newTheme = currentTheme === 'escuro' ? 'claro' : 'escuro';
-  document.documentElement.setAttribute('data-theme', newTheme);
-
-
-  // Trocar a imagem do tema
-  otherImgTheme();
-
-});
-
-//funcao que deixa padrao o tema claro primeiro
-function setDefaultTheme() {
-  const currentTheme = document.documentElement.getAttribute('data-theme');
-  if (!currentTheme) {
-    document.documentElement.setAttribute('data-theme', 'claro'); // 'claro' é o tema padrão, você pode alterar para 'escuro' se preferir
-    const imgThemeElement = document.getElementById("img-theme");
-    const dayTheme = document.getElementById("img-theme-day");
-    imgThemeElement.src = dayTheme.src;
-  }
-}
-
-function otherImgTheme() {
-  const imgTheme = document.documentElement.getAttribute('theme-img');
-  const imgThemeElement = document.getElementById("img-theme");
-  const currentTheme = document.documentElement.getAttribute('data-theme');
-  const nightTheme = document.getElementById("img-theme-night");
-  const dayTheme = document.getElementById("img-theme-day");
-
-  if (currentTheme === "escuro") {
-    imgThemeElement.src = nightTheme.src;
-  }
-  if (currentTheme === "claro") {
-    imgThemeElement.src = dayTheme.src;
-  }
-
-}
-
-setDefaultTheme();
-
